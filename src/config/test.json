@@ -1,0 +1,21 @@
+{
+  "useMinify": false,
+  "baseUrl": "http://unit-test.caisse.loco-local.net",
+  "db": {
+    "database": "sel-test",
+    "user": "sel-test",
+    "password": "sel-test",
+    "options": {
+      "dialect" : "sqlite",
+      "host": "localhost",
+      "storage": "./yatikekun.sqlite",
+      "logging": false
+    }
+  },
+  "authentication":{
+    "jwtSecret": "f2c76830-7648-4cf2-af0c-91b5948a9fa2"
+  },
+  "sendgrid": "mock",
+  "noCompress": true,
+  "port": 5300
+}

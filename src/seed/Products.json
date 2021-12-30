@@ -1,0 +1,71 @@
+[
+  {
+    "name": "Vaisselle",
+    "description": "",
+    "price": 5.25,
+    "isUserDefinedPrice": false,
+    "hasDecimalQuantity": true,
+    "isPriceInKg": true,
+    "CategoryId": 2,
+    "taxable": true
+  },
+  {
+    "name": "Activité",
+    "description": "L'argent récolté pour une activité",
+    "isUserDefinedPrice": true,
+    "hasDecimalQuantity": true,
+    "isPriceInKg": false,
+    "CategoryId": 1,
+    "taxable": false
+  },
+  {
+    "name": "Lessive",
+    "description": "",
+    "price": 6.25,
+    "isUserDefinedPrice": false,
+    "hasDecimalQuantity": true,
+    "isPriceInKg": true,
+    "CategoryId": 2,
+    "taxable": true
+  },
+  {
+    "name": "Main et corps",
+    "description": "",
+    "price": 8.25,
+    "isUserDefinedPrice": false,
+    "hasDecimalQuantity": true,
+    "isPriceInKg": true,
+    "CategoryId": 2,
+    "taxable": true
+  },
+  {
+    "name": "Chocolat",
+    "description": "",
+    "price": 6,
+    "isUserDefinedPrice": false,
+    "hasDecimalQuantity": true,
+    "isPriceInKg": true,
+    "CategoryId": 3,
+    "taxable": true
+  },
+  {
+    "name": "Tout usage",
+    "description": "",
+    "price": 4.90,
+    "isUserDefinedPrice": false,
+    "hasDecimalQuantity": true,
+    "isPriceInKg": true,
+    "CategoryId": 2,
+    "taxable": true
+  },
+  {
+    "name": "Shampooing",
+    "description": "",
+    "price": 9.20,
+    "isUserDefinedPrice": false,
+    "hasDecimalQuantity": true,
+    "isPriceInKg": true,
+    "CategoryId": 2,
+    "taxable": true
+  }
+]

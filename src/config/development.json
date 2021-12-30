@@ -1,0 +1,25 @@
+{
+  "useMinify": false,
+  "baseUrl": "http://localhost:8080",
+  "imageBasePath": "/tmp",
+  "db": {
+    "database": "yatikekun",
+    "user": "yatikekun",
+    "password": "yatikekun",
+    "options": {
+      "dialect": "sqlite",
+      "host": "localhost",
+      "storage": "/home/chenzo//Projects/caisse-loco-local/caisse-loco-local-serveur/caisse.sqlite",
+      "logging": true
+    }
+  },
+  "authentication": {
+    "jwtSecret": "fc819b5f-2755-411f-bf9d-d5b280d8311c"
+  },
+  "sendgrid": "mock",
+  "recaptchaV3Key" : "",
+  "fb": "",
+  "appId": "",
+  "fbGroupId": "",
+  "fbAccessToken" : ""
+}
