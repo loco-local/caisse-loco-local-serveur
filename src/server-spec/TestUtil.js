@@ -1,6 +1,6 @@
 const config = require('../config');
 config.setEnvironment('test');
-const {Users, Offers, Transactions} = require('../model');
+const {Users} = require('../model');
 const jwt = require('jsonwebtoken');
 const chai = require('chai');
 require('chai').should();
@@ -34,54 +34,5 @@ TestUtil.getUserByEmail = function (email) {
         }
     });
 }
-
-TestUtil.getOfferByTitle = function (title) {
-    return Offers.findOne({
-        where: {
-            title_fr: title
-        }
-    });
-};
-
-TestUtil.listTransactionsForUserId = function (userId, sortType) {
-    if (!sortType) {
-        sortType = "DESC";
-    }
-    return Transactions.findAll({
-        include: [
-            {model: Users, as: 'initiator', attributes: Users.getFewAttributes()},
-            {model: Users, as: 'giver', attributes: Users.getFewAttributes()},
-            {model: Users, as: 'receiver', attributes: Users.getFewAttributes()}
-        ],
-        where: {
-            $or: [
-                {
-                    GiverId: userId
-
-                },
-                {
-                    ReceiverId: userId
-                },
-            ]
-        },
-        order: [['createdAt', sortType]]
-    });
-};
-
-TestUtil.addTransaction = async function (giver, amount, receiverUuid, offerId, orgId) {
-    let auth = await TestUtil.signIn(giver.email);
-    let res = await chai.request(app)
-        .post('/api/transaction')
-        .set('Authorization', 'Bearer ' + auth.token)
-        .send({
-            amount: amount,
-            InitiatorId: giver.id,
-            GiverUuid: giver.uuid,
-            ReceiverUuid: receiverUuid,
-            OfferId: offerId,
-            organisationId: orgId
-        });
-    return res.body.transactionId;
-};
 
 module.exports = TestUtil;
