@@ -4,10 +4,10 @@ module.exports = (sequelize, DataTypes) => {
         description: DataTypes.STRING,
         price: DataTypes.DOUBLE,
         isPriceInKg: DataTypes.BOOLEAN,
-        taxable: DataTypes.BOOLEAN,
+        isTaxable: DataTypes.BOOLEAN,
         image: DataTypes.JSONB,
         nbInStock: DataTypes.DOUBLE,
-        isUserDefinedPrice: DataTypes.BOOLEAN,
+        isActivity: DataTypes.BOOLEAN,
         isAvailable: DataTypes.BOOLEAN,
         hasDecimalQuantity: DataTypes.BOOLEAN
     })
