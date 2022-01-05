@@ -1,20 +1,18 @@
 const {Users, Transactions} = require('../model')
 const uuid = require('uuid');
 const AuthenticationController = require('./AuthenticationController')
-const MemberController = {
+const UserController = {
     async list(req, res) {
         let attributes = [
-            "uuid",
+            "id",
             "firstname",
-            "lastname"
+            "lastname",
+            "balance"
         ];
-        if (req.user.status === 'admin') {
+        if (req.user && req.user.status === 'admin') {
             attributes = attributes.concat([
                 "email",
-                "status",
-                "locale",
-                "subRegion",
-                "id"
+                "status"
             ])
         }
         let members = await Users.findAll({
@@ -47,7 +45,7 @@ const MemberController = {
         member = await Users.create(
             member
         );
-        await MemberController._createInitialTransactionForMemberId(member.id);
+        await UserController._createInitialTransactionForMemberId(member.id);
         const passwordToken = await AuthenticationController._resetPassword(member.email);
         res.send({
             passwordToken: passwordToken
@@ -126,4 +124,4 @@ const MemberController = {
         });
     }
 };
-module.exports = MemberController;
+module.exports = UserController;

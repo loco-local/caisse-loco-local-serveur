@@ -1,39 +1,26 @@
 [
-  {
-    "email": "a@loco.net",
-    "firstname": "Armand",
-    "lastname": "Michel",
-    "password": "12345678",
-    "status": "admin",
-    "locale": "fr",
-    "AdminUserId": 1,
-    "uuid": "f75d5e72-7a3d-44c9-970f-b9d5eabade6c",
-    "phone1": "555-222-1123",
-    "address": "164 222 de la grand route",
-    "OrganisationId": "1"
-  },
-  {
-    "email": "u@loco.net",
-    "firstname": "Bob",
-    "lastname": "Heureux",
-    "password": "12345678",
-    "status": "member",
-    "locale": "fr",
-    "AdminUserId": 1,
-    "uuid": "1dcad149-3329-49a1-b417-48db85415ec5",
-    "phone1": "555-11-1323",
-    "address": "164 222 de la grand route"
-  },
-  {
-    "email": "u2@loco.net",
-    "firstname": "Mire",
-    "lastname": "Amor",
-    "password": "12345678",
-    "status": "member",
-    "locale": "fr",
-    "AdminUserId": 1,
-    "uuid": "d9a8c523-417d-466f-811c-c08c490b34a3",
-    "phone1": "555-11-1323",
-    "address": "164 222 de la grand route"
-  }
+    {
+        "email": "c1@loco.net",
+        "password": "12345678",
+        "status": "client",
+        "firstname": "Client",
+        "lastname": "Un",
+        "balance": "333.35"
+    },
+    {
+        "email": "c2@loco.net",
+        "password": "12345678",
+        "status": "client",
+        "firstname": "Client",
+        "lastname": "Deux",
+        "balance": "0"
+    },
+    {
+        "email": "c3@loco.net",
+        "password": "12345678",
+        "status": "client",
+        "firstname": "Client",
+        "lastname": "Trois",
+        "balance": "35.95"
+    }
 ]

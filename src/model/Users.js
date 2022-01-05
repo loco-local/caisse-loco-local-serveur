@@ -23,10 +23,11 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     resetPasswordToken: DataTypes.STRING,
     resetPasswordExpires: DataTypes.DATE,
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
+    firstname: DataTypes.STRING,
+    lastname: DataTypes.STRING,
+    phone: DataTypes.STRING,
     status: DataTypes.STRING,
-    locale: DataTypes.STRING,
+    balance: DataTypes.DOUBLE,
   }, {
     hooks: {
       beforeCreate: hashPassword,
