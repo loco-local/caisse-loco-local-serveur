@@ -1,8 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
     const TransactionItems = sequelize.define('TransactionItems', {
         quantity: DataTypes.INTEGER,
-        unitPrice: DataTypes.DOUBLE,
+        price: DataTypes.DOUBLE,
         totalPrice: DataTypes.DOUBLE,
+        info: DataTypes.JSON,
         totalPriceAfterRebate: DataTypes.DOUBLE,
         rebates: DataTypes.JSON
     }, {

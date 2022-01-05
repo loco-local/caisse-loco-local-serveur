@@ -79,4 +79,45 @@ router.get(
     ProductController.listAvailable
 )
 
+
+// router.get(
+//     '/:ownerId/transaction',
+//     isOwnerArdoiseUserOrAdmin,
+//     TransactionController.list
+// )
+//
+// router.post(
+//     '/:ownerId/transaction',
+//     isOwnerArdoiseUserOrAdmin,
+//     TransactionController.subscriberTransaction
+// )
+//
+// router.get(
+//     '/:ownerId/transaction/:transactionId',
+//     isOwnerArdoiseUserOrAdmin,
+//     TransactionController.transactionDetails
+// )
+router.post(
+    '/transaction',
+    TransactionController.anonymousTransaction
+)
+
+router.get(
+    '/transactions/details/:year',
+    isAdmin,
+    TransactionController.listAllDetails
+)
+
+router.delete(
+    '/transaction/:transactionId',
+    isAdmin,
+    TransactionController.removeTransaction
+)
+
+router.post(
+    '/transaction/fund',
+    isAdmin,
+    TransactionController.addFund
+)
+
 module.exports = router

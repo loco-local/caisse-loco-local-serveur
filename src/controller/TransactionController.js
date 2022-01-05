@@ -88,7 +88,7 @@ const TransactionController = {
             }
         }).then(function (_user) {
             user = _user
-            return TransactionController._setItemPrices(
+            return TransactionController._sanitizeItems(
                 req.body
             )
         }).then(function (_items) {
@@ -130,20 +130,18 @@ const TransactionController = {
             res.send(transactionItems)
         })
     },
-    anonymousTransaction(req, res) {
-        TransactionController._setItemPrices(
+    async anonymousTransaction(req, res) {
+        let items = await TransactionController._sanitizeItems(
             req.body
-        ).then(function (items) {
-            items = items.map(function (item) {
-                item.totalPriceAfterRebate = parseFloat(item.totalPrice)
-                return item
-            })
-            return TransactionController._transaction(
-                items
-            ).then(function (transaction) {
-                res.send(transaction)
-            })
+        );
+        items = items.map(function (item) {
+            item.totalPriceAfterRebate = parseFloat(item.totalPrice)
+            return item
         })
+        const transaction = await TransactionController._transaction(
+            items
+        )
+        res.send(transaction);
     },
     addFund(req, res) {
         const amount = req.body.amount
@@ -214,7 +212,7 @@ const TransactionController = {
         let totalPrice = items.reduce(function (sum, item) {
             return (sum) + (item.totalPriceAfterRebate)
         }, 0)
-        return models.sequelize.transaction(function (t) {
+        return models.sequelize.transaction(async function (t) {
             const newTransaction = {
                 totalPrice: parseFloat(totalPrice).toFixed(2)
             }
@@ -238,23 +236,19 @@ const TransactionController = {
             } else {
                 promise = Promise.resolve()
             }
-            return promise.then(function () {
-                return Transactions.create(newTransaction)
-            }).then(function (_transaction) {
-                transaction = _transaction
-                return Promise.all(items.map(function (item) {
-                    item.TransactionId = transaction.id
-                    return TransactionItems.create(
-                        item
-                    )
-                }))
-            }).then(function () {
-                return transaction
-            })
+            await promise;
+            transaction = Transactions.create(newTransaction);
+            await Promise.all(items.map(function (item) {
+                item.TransactionId = transaction.id
+                return TransactionItems.create(
+                    item
+                )
+            }))
+            return transaction
         })
     },
-    _setItemPrices: function (items) {
-        return Products.findAll({
+    _sanitizeItems: async function (items) {
+        const products = await Products.findAll({
             where: {
                 id: {
                     $in: items.map(function (item) {
@@ -262,20 +256,22 @@ const TransactionController = {
                     })
                 }
             }
-        }).then(function (products) {
-            return items.map(function (item) {
-                item.unitPrice = products.filter(function (product) {
-                    return product.id === item.id
-                })[0].unitPrice
-                if (item.quantity < 0) {
-                    item.quantity = 0
-                }
-                item.totalPrice = item.unitPrice * item.quantity
-                item.ProductId = item.id
-                item.id = null
-                return item
-            })
-        })
+        });
+        return items.map(function (item) {
+            const product = products.filter(function (product) {
+                return product.id === item.id
+            })[0];
+            if (!product.isActivity) {
+                item.price = product.price
+            }
+            if (item.quantity < 0) {
+                item.quantity = 0
+            }
+            item.totalPrice = item.price * item.quantity
+            item.ProductId = item.id
+            item.id = null
+            return item
+        });
     },
     _getUserLatestTransaction: function (user) {
         return Transactions.findAll({
