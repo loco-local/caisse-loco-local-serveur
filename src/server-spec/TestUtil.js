@@ -1,6 +1,6 @@
 const config = require('../config');
 config.setEnvironment('test');
-const {Users} = require('../model');
+const {Users, Transactions, Products} = require('../model');
 const jwt = require('jsonwebtoken');
 const chai = require('chai');
 require('chai').should();
@@ -34,5 +34,36 @@ TestUtil.getUserByEmail = function (email) {
         }
     });
 }
+
+TestUtil.listTransactionsForUserId = function (userId, sortType) {
+    if (!sortType) {
+        sortType = "DESC";
+    }
+    return Transactions.findAll({
+        include: [
+            Users
+        ],
+        where: {
+            UserId: userId
+        },
+        order: [['createdAt', sortType]]
+    });
+};
+
+TestUtil.addTransaction = async function (user, items) {
+    let res = await chai.request(app)
+        .post('/api/' + user.id + '/transaction')
+        .send(items);
+    return res.body.transactionId;
+};
+
+TestUtil.getProductByName = async function (name) {
+    const product = await Products.findOne({
+        where: {
+            name: name
+        }
+    });
+    return product.dataValues;
+};
 
 module.exports = TestUtil;

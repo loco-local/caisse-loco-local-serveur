@@ -84,11 +84,10 @@ router.get(
 //     TransactionController.list
 // )
 //
-// router.post(
-//     '/:ownerId/transaction',
-//     isOwnerArdoiseUserOrAdmin,
-//     TransactionController.subscriberTransaction
-// )
+router.post(
+    '/:userId/transaction',
+    TransactionController.prepaidAccountTransaction
+)
 //
 // router.get(
 //     '/:ownerId/transaction/:transactionId',

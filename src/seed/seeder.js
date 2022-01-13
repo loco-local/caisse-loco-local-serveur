@@ -6,12 +6,14 @@ const {
     sequelize,
     Users,
     Products,
-    Categories
+    Categories,
+    Transactions
 } = require('../model')
 
 const users = require('./Users.json')
 const products = require('./Products.json')
 const categories = require('./Categories.json')
+const transactions = require('./Transactions.json')
 
 module.exports = {
     run: function () {
@@ -35,6 +37,13 @@ module.exports = {
                     products.map(product => {
                         product.isAvailable = true;
                         return Products.create(product)
+                    })
+                )
+            })
+            .then(() => {
+                return Promise.all(
+                    transactions.map(transaction => {
+                        return Transactions.create(transaction)
                     })
                 )
             })

@@ -14,9 +14,6 @@ const {
 
 const {Op} = require('sequelize')
 
-const SUBSCRIBER_REBATE_CODE = 'subscriber'
-const REBATE_RATIO = 0.1
-
 const TransactionController = {
     list(req, res) {
         const subscriberId = parseInt(req.params['ownerId'])
@@ -78,43 +75,29 @@ const TransactionController = {
             res.sendStatus(401);
         }
     },
-    subscriberTransaction(req, res) {
-        let user
-        const userId = parseInt(req.params['ownerId'])
-        let items
-        return Users.findOne({
+    async prepaidAccountTransaction(req, res) {
+        const userId = parseInt(req.params['userId'])
+        let user = await Users.findOne({
             where: {
                 id: userId
             }
-        }).then(function (_user) {
-            user = _user
-            return TransactionController._sanitizeItems(
-                req.body
-            )
-        }).then(function (_items) {
-            items = _items.map(function (item) {
-                // if (user.hasRebate) {
-                // const rebate = parseFloat(item.totalPrice * REBATE_RATIO)
-                // item.totalPriceAfterRebate = parseFloat(item.totalPrice - rebate)
-                // item.rebates = [{
-                //   amount: rebate,
-                //   code: SUBSCRIBER_REBATE_CODE
-                // }]
-                // } else {
-                item.totalPriceAfterRebate = parseFloat(item.totalPrice)
-                // }
-                return item
-            })
-            return TransactionController._getUserLatestTransaction(
-                user
-            )
-        }).then(function (latestTransaction) {
-            return TransactionController._transaction(
-                items, user, latestTransaction
-            )
-        }).then(function (transaction) {
-            res.send(transaction)
+        });
+        // console.log("yo " + JSON.stringify(req.body[0]))
+        let items = await TransactionController._sanitizeItems(
+            req.body
+        )
+        items = items.map(function (item) {
+            item.totalPriceAfterRebate = parseFloat(item.totalPrice)
+            return item
         })
+        let latestTransaction = await TransactionController._getUserLatestTransaction(
+            user
+        );
+        // console.log(latestTransaction.balance)
+        let transaction = await TransactionController._transaction(
+            items, user, latestTransaction
+        );
+        res.send(transaction)
     },
     transactionDetails(req, res) {
         const transactionId = parseInt(req.params['transactionId'])
@@ -129,7 +112,8 @@ const TransactionController = {
         }).then(function (transactionItems) {
             res.send(transactionItems)
         })
-    },
+    }
+    ,
     async anonymousTransaction(req, res) {
         let items = await TransactionController._sanitizeItems(
             req.body
@@ -142,7 +126,8 @@ const TransactionController = {
             items
         )
         res.send(transaction);
-    },
+    }
+    ,
     addFund(req, res) {
         const amount = req.body.amount
         const subscriberId = req.body.subscriberId
@@ -174,7 +159,8 @@ const TransactionController = {
         }).then(function (transaction) {
             res.send(transaction)
         })
-    },
+    }
+    ,
     addPenaltyFee(req, res) {
         const amount = req.body.amount
         const subscriberId = req.body.subscriberId
@@ -225,14 +211,14 @@ const TransactionController = {
             if (user) {
                 newTransaction.UserId = user.id
                 user.balance = newTransaction.balance
-                console.log('items')
-                console.log(items)
-                console.log('TransactionController._areItemsAdminOnly(items)')
-                console.log(TransactionController._areItemsAdminOnly(items))
+                // console.log('items')
+                // console.log(items)
+                // console.log('TransactionController._areItemsAdminOnly(items)')
+                // console.log(TransactionController._areItemsAdminOnly(items))
                 if (!TransactionController._areItemsAdminOnly(items)) {
                     user.latestTransaction = new Date()
                 }
-                promise = user.save()
+                promise = user.save();
             } else {
                 promise = Promise.resolve()
             }
@@ -246,7 +232,8 @@ const TransactionController = {
             }))
             return transaction
         })
-    },
+    }
+    ,
     _sanitizeItems: async function (items) {
         const products = await Products.findAll({
             where: {
@@ -273,19 +260,18 @@ const TransactionController = {
             return item
         });
     },
-    _getUserLatestTransaction: function (user) {
-        return Transactions.findAll({
+    _getUserLatestTransaction: async function (user) {
+        const latestTransactions = await Transactions.findAll({
             limit: 1,
             order: [['createdAt', 'DESC']],
             where: {
                 UserId: user.id
             },
             attributes: ['balance', 'createdAt']
-        }).then(function (latestTransactions) {
-            return latestTransactions.length ? latestTransactions[0] : {
-                balance: 0
-            }
-        })
+        });
+        return latestTransactions.length ? latestTransactions[0] : {
+            balance: 0
+        };
     },
     _areItemsAdminOnly: function (items) {
         return items.every(function (item) {
