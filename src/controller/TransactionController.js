@@ -125,72 +125,33 @@ const TransactionController = {
             items
         )
         res.send(transaction);
-    }
-    ,
-    addFund(req, res) {
+    },
+    async addFund(req, res) {
         const amount = req.body.amount
-        const subscriberId = req.body.subscriberId
-        if (!amount || !subscriberId) {
+        const accountId = req.body.accountId
+        if (!amount || !accountId) {
             return res.sendStatus(400)
         }
-        let user
-        Users.findOne({
+        let user = await Users.findOne({
             where: {
-                id: subscriberId
+                id: accountId
             }
-        }).then(function (_user) {
-            user = _user
-            return TransactionController._getUserLatestTransaction(
-                user
-            )
-        }).then(function (latestTransaction) {
-            return TransactionController._transaction(
-                [{
-                    ProductId: BASKET_PRODUCT_ID,
-                    quantity: 1,
-                    unitPrice: amount * -1,
-                    totalPrice: amount * -1,
-                    totalPriceAfterRebate: amount * -1
-                }],
-                user,
-                latestTransaction
-            )
-        }).then(function (transaction) {
-            res.send(transaction)
-        })
-    }
-    ,
-    addPenaltyFee(req, res) {
-        const amount = req.body.amount
-        const subscriberId = req.body.subscriberId
-        if (!amount || !subscriberId) {
-            return res.sendStatus(400)
-        }
-        let user
-        Users.findOne({
-            where: {
-                id: subscriberId
-            }
-        }).then(function (_user) {
-            user = _user
-            return TransactionController._getUserLatestTransaction(
-                user
-            )
-        }).then(function (latestTransaction) {
-            return TransactionController._transaction(
-                [{
-                    ProductId: PENALTY_PRODUCT_ID,
-                    quantity: 1,
-                    unitPrice: amount,
-                    totalPrice: amount,
-                    totalPriceAfterRebate: amount
-                }],
-                user,
-                latestTransaction
-            )
-        }).then(function (transaction) {
-            res.send(transaction)
-        })
+        });
+        let latestTransaction = await TransactionController._getUserLatestTransaction(
+            user
+        );
+        let transaction = await TransactionController._transaction(
+            [{
+                ProductId: BASKET_PRODUCT_ID,
+                quantity: 1,
+                unitPrice: amount * -1,
+                totalPrice: amount * -1,
+                totalPriceAfterRebate: amount * -1
+            }],
+            user,
+            latestTransaction
+        )
+        res.send(transaction);
     },
     _transaction(items, user, latestUserTransaction) {
         let transaction

@@ -110,7 +110,6 @@ router.delete(
 
 router.post(
     '/transaction/fund',
-    isAdmin,
     TransactionController.addFund
 )
 
