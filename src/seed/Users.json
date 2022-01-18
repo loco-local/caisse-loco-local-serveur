@@ -5,7 +5,8 @@
         "status": "client",
         "firstname": "Client",
         "lastname": "Un",
-        "balance": "333.35"
+        "balance": "333.35",
+        "latestTransaction": "2018-07-13 18:40:04.112-05"
     },
     {
         "email": "c2@loco.net",
@@ -13,7 +14,8 @@
         "status": "client",
         "firstname": "Client",
         "lastname": "Deux",
-        "balance": "0"
+        "balance": "0",
+        "latestTransaction": "2018-07-13 18:40:04.112-05"
     },
     {
         "email": "c3@loco.net",
@@ -21,6 +23,7 @@
         "status": "client",
         "firstname": "Client",
         "lastname": "Trois",
-        "balance": "34.00"
+        "balance": "34.00",
+        "latestTransaction": "2018-07-13 18:40:04.112-05"
     }
 ]

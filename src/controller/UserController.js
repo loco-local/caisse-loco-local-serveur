@@ -7,7 +7,9 @@ const UserController = {
             "id",
             "firstname",
             "lastname",
-            "balance"
+            "balance",
+            "createdAt",
+            "latestTransaction"
         ];
         if (req.user && req.user.status === 'admin') {
             attributes = attributes.concat([
@@ -52,23 +54,15 @@ const UserController = {
         });
     },
     async get(req, res) {
-        const memberUuid = req.params['memberId']
-        if (req.user.status !== 'admin' && req.user.uuid !== memberUuid) {
-            return res.send(401);
-        }
+        const userId = req.params['userId']
         let attributes = Users.getSafeAttributes();
-        if (req.user.status === 'admin') {
-            attributes = attributes.concat([
-                "AdminUserId"
-            ]);
-        }
-        const member = await Users.findOne({
+        const user = await Users.findOne({
             attributes: attributes,
             where: {
-                uuid: memberUuid
+                id: userId
             }
         });
-        res.send(member);
+        res.send(user);
     },
     async updateMember(req, res) {
         let member = req.body;

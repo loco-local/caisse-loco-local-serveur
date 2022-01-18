@@ -26,8 +26,10 @@ module.exports = (sequelize, DataTypes) => {
     firstname: DataTypes.STRING,
     lastname: DataTypes.STRING,
     phone: DataTypes.STRING,
+    address: DataTypes.STRING,
     status: DataTypes.STRING,
     balance: DataTypes.DOUBLE,
+    latestTransaction: DataTypes.DATE
   }, {
     hooks: {
       beforeCreate: hashPassword,
@@ -40,5 +42,8 @@ module.exports = (sequelize, DataTypes) => {
   User.defineAssociationsUsingModels = function (model, models) {
     model.hasMany(models.Transactions)
   }
+  User.getSafeAttributes = function () {
+    return ["email", "id", "firstname", "lastname", "status", "phone", "address", "createdAt"]
+  };
   return User
 }

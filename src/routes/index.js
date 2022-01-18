@@ -40,12 +40,11 @@ router.get(
 //     MemberController.getNbMembers
 // )
 //
-// router.get(
-//     '/member/:memberId',
-//     isAuthenticated,
-//     MemberController.get
-// )
-//
+router.get(
+    '/user/:userId',
+    UserController.get
+)
+
 // router.put(
 //     '/member/:uuid',
 //     isAuthenticated,
@@ -77,13 +76,11 @@ router.get(
     ProductController.listAvailable
 )
 
+router.get(
+    '/:userId/transaction',
+    TransactionController.listForUser
+)
 
-// router.get(
-//     '/:ownerId/transaction',
-//     isOwnerArdoiseUserOrAdmin,
-//     TransactionController.list
-// )
-//
 router.post(
     '/:userId/transaction',
     TransactionController.prepaidAccountTransaction

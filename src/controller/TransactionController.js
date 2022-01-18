@@ -15,15 +15,14 @@ const {
 const {Op} = require('sequelize')
 
 const TransactionController = {
-    list(req, res) {
-        const subscriberId = parseInt(req.params['ownerId'])
-        return Transactions.findAll({
+    async listForUser(req, res) {
+        const userId = parseInt(req.params['userId'])
+        const transactions = await Transactions.findAll({
             where: {
-                UserId: subscriberId
+                UserId: userId
             }
-        }).then(function (transactions) {
-            res.send(transactions)
-        })
+        });
+        res.send(transactions)
     },
     listAllDetails(req, res) {
         const year = parseInt(req.params['year'])
