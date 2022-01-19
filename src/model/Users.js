@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     model.hasMany(models.Transactions)
   }
   User.getSafeAttributes = function () {
-    return ["email", "id", "firstname", "lastname", "status", "phone", "address", "createdAt"]
+    return ["email", "id", "firstname", "lastname", "status", "phone", "address", "createdAt", "balance"]
   };
   return User
 }
