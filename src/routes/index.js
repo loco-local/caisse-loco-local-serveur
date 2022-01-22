@@ -22,35 +22,21 @@ router.get(
     UserController.list
 )
 
-// router.get(
-//     '/member',
-//     isAuthenticated,
-//     MemberController.list
-// )
-//
-// router.post(
-//     '/member',
-//     isAdmin,
-//     MemberController.createMember
-// )
-//
-// router.get(
-//     '/member/count',
-//     isAdmin,
-//     MemberController.getNbMembers
-// )
-//
 router.get(
     '/user/:userId',
     UserController.get
 )
 
-// router.put(
-//     '/member/:uuid',
-//     isAuthenticated,
-//     MemberController.updateMember
-// )
-//
+router.post(
+    '/user',
+    UserController.createUser
+)
+
+router.put(
+    '/user/:userId',
+    UserController.updateUser
+)
+
 
 router.post(
     '/login',

@@ -25,16 +25,13 @@ const UserController = {
         });
         res.send(members);
     },
-    async createMember(req, res) {
-        if (req.user.status !== 'admin') {
-            return res.send(401);
-        }
-        let member = req.body;
-        member.email = member.email.toLowerCase();
-        delete member.password;
+    async createUser(req, res) {
+        let info = req.body;
+        info.email = info.email.toLowerCase();
+        delete info.password;
         let user = await Users.findOne({
             where: {
-                email: member.email
+                email: info.email
             }
         });
         if (user) {
@@ -42,16 +39,12 @@ const UserController = {
                 error: 'Register information is incorrect'
             })
         }
-        member.uuid = uuid();
-        member.region = "BDC";
-        member = await Users.create(
-            member
+        user = await Users.create(
+            info
         );
-        await UserController._createInitialTransactionForMemberId(member.id);
-        const passwordToken = await AuthenticationController._resetPassword(member.email);
         res.send({
-            passwordToken: passwordToken
-        });
+            id: user.id
+        })
     },
     async get(req, res) {
         const userId = req.params['userId']
@@ -64,41 +57,27 @@ const UserController = {
         });
         res.send(user);
     },
-    async updateMember(req, res) {
-        let member = req.body;
-        if (member.id !== req.user.id && req.user.status !== 'admin') {
-            return res.send(403);
+    async updateUser(req, res) {
+        let user = req.body;
+        if (user.id !== parseInt(req.params['userId'])) {
+            return res.send(401);
         }
         const updateInfo = {
-            firstname: member.firstname,
-            lastname: member.lastname,
-            email: member.email,
-            facebookId: member.facebookId,
-            subRegion: member.subRegion,
-            phone1: member.phone1,
-            phone2: member.phone2,
-            pronoun: member.pronoun,
-            address: member.address,
-            contactByEmail: member.contactByEmail,
-            contactByMessenger: member.contactByMessenger,
-            contactByPhone: member.contactByPhone,
-            preferredCommunication: member.preferredCommunication,
-            language: member.language
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email,
+            phone: user.phone,
+            address: user.address,
+
         };
-        if (req.user.status === 'admin') {
-            updateInfo.status = member.status;
-            updateInfo.OrganisationId = member.OrganisationId;
-            updateInfo.AdminUserId = member.AdminUserId;
-        }
-        member = await Users.update(
+        await Users.update(
             updateInfo,
             {
                 where: {
-                    id: member.id,
-                    uuid: req.params.uuid
+                    id: user.id
                 }
             });
-        res.send(member);
+        res.sendStatus(200);
     },
     async getNbMembers(req, res) {
         const nbMembers = await Users.count();
