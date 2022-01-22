@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 const IMAGE_WIDTH = 500
-const IMAGE_BASE_PATH = '/home/caisse.loco-local.net/var/lib/popa/image'
+const IMAGE_BASE_PATH = '/home/caisse.loco-local.net/image'
 const {Products, Categories} = require('../model')
 const uuid = require('uuid')
 const sharp = require('sharp')
@@ -21,10 +21,13 @@ module.exports = {
             res.send(products)
         })
     },
-    list(req, res) {
-        return Products.findAll().then(function (products) {
-            res.send(products)
-        })
+    async list(req, res) {
+        const products = await Products.findAll({
+            include: [
+                {model: Categories, as: 'category'},
+            ]
+        });
+        res.send(products);
     },
     getDetails(req, res) {
         const productId = parseInt(req.params['productId'])

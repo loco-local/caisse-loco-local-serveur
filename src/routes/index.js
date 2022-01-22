@@ -57,6 +57,12 @@ router.post(
     '/change-password',
     AuthenticationController.changePassword
 )
+
+router.get(
+    '/product',
+    ProductController.list
+)
+
 router.get(
     '/product/available',
     ProductController.listAvailable
