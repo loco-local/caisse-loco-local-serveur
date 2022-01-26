@@ -41,7 +41,7 @@ app.use(function (req, res, next) {
   next(err)
 })
 
-const port = config.getConfig().port || 4105
+const port = config.getConfig().port || 4107
 sequelize.sync()
   .then(() => {
     server.listen(port, function () {
