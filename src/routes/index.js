@@ -1,8 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const AuthenticationController = require('../controller/AuthenticationController')
-
-const AuthenticationControllerPolicy = require('../policy/AuthenticationControllerPolicy')
 
 const UserController = require('../controller/UserController')
 //
@@ -35,27 +32,6 @@ router.post(
 router.put(
     '/user/:userId',
     UserController.updateUser
-)
-
-
-router.post(
-    '/login',
-    AuthenticationController.login
-)
-
-router.post(
-    '/reset-password',
-    AuthenticationController.resetPassword
-)
-
-router.post(
-    '/token-valid',
-    AuthenticationController.isTokenValid
-)
-
-router.post(
-    '/change-password',
-    AuthenticationController.changePassword
 )
 
 router.get(

@@ -1,6 +1,4 @@
 const {Users, Transactions} = require('../model')
-const uuid = require('uuid');
-const AuthenticationController = require('./AuthenticationController')
 const UserController = {
     async list(req, res) {
         let attributes = [
