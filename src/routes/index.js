@@ -40,8 +40,18 @@ router.get(
 )
 
 router.get(
+    '/product/:productId',
+    ProductController.getDetails
+)
+
+router.get(
     '/product/available',
     ProductController.listAvailable
+)
+
+router.put(
+    '/product/:productId',
+    ProductController.updateProduct
 )
 
 router.get(

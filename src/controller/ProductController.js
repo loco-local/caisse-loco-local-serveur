@@ -29,15 +29,14 @@ module.exports = {
         });
         res.send(products);
     },
-    getDetails(req, res) {
+    async getDetails(req, res) {
         const productId = parseInt(req.params['productId'])
-        return Products.findOne({
+        const product = await Products.findOne({
             where: {
                 id: productId
             }
-        }).then(function (product) {
-            res.send(product)
-        })
+        });
+        res.send(product);
     },
     createProduct(req, res) {
         const product = req.body
@@ -57,26 +56,30 @@ module.exports = {
             res.send(product)
         })
     },
-    updateProduct(req, res) {
-        const product = req.body
+    async updateProduct(req, res) {
+        let product = req.body
+        if (product.id !== parseInt(req.params['productId'])) {
+            return res.sendStatus(401)
+        }
         if (!product.nbInStock || product.nbInStock === '') {
             product.nbInStock = 0
         }
-        return Products.update({
+        await Products.update({
             name: product.name,
-            image: product.image,
-            format: product.format,
             description: product.description,
-            unitPrice: product.unitPrice,
+            isTaxable: product.isTaxable,
+            price: product.price,
+            isPriceInKg: product.isPriceInKg,
             nbInStock: product.nbInStock,
-            isAvailable: product.isAvailable
+            isAvailable: product.isAvailable,
+            hasDecimalQuantity: product.hasDecimalQuantity,
+            isActivity: product.isActivity
         }, {
             where: {
                 id: product.id
             }
-        }).then(function (product) {
-            res.send(product)
-        })
+        });
+        res.send();
     },
     updateProductAvailability(req, res) {
         const product = req.body
