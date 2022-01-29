@@ -54,6 +54,11 @@ router.put(
     ProductController.updateProduct
 )
 
+router.post(
+    '/product',
+    ProductController.createProduct
+)
+
 router.get(
     '/:userId/transaction',
     TransactionController.listForUser
