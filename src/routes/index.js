@@ -5,6 +5,7 @@ const UserController = require('../controller/UserController')
 //
 const TransactionController = require('../controller/TransactionController')
 const ProductController = require('../controller/ProductController')
+const CategoryController = require('../controller/CategoryController')
 const isAuthenticated = require('../policy/isAuthenticated')
 const isAdmin = require('../policy/isAdmin')
 
@@ -40,13 +41,13 @@ router.get(
 )
 
 router.get(
-    '/product/:productId',
-    ProductController.getDetails
+    '/product/available',
+    ProductController.listAvailable
 )
 
 router.get(
-    '/product/available',
-    ProductController.listAvailable
+    '/product/:productId',
+    ProductController.getDetails
 )
 
 router.put(
@@ -95,5 +96,26 @@ router.post(
     '/transaction/fund',
     TransactionController.addFund
 )
+
+router.get(
+    '/category',
+    CategoryController.list
+)
+
+router.post(
+    '/category',
+    CategoryController.createCategory
+)
+
+router.put(
+    '/category/priority/:categoryId',
+    CategoryController.updatePriority
+)
+
+router.put(
+    '/category/name/:categoryId',
+    CategoryController.updateName
+)
+
 
 module.exports = router
