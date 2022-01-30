@@ -81,8 +81,7 @@ router.post(
 )
 
 router.get(
-    '/transactions/details/:year',
-    isAdmin,
+    '/transactions/details',
     TransactionController.listAllDetails
 )
 

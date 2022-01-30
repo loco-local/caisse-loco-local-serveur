@@ -24,36 +24,16 @@ const TransactionController = {
         });
         res.send(transactions)
     },
-    listAllDetails(req, res) {
-        const year = parseInt(req.params['year'])
-        const beginningOfYear = new Date();
-        beginningOfYear.setFullYear(year);
-        beginningOfYear.setMonth(0);
-        beginningOfYear.setDate(1);
-        beginningOfYear.setHours(0, 0, 0);
-
-
-        const endOfYear = new Date();
-        endOfYear.setFullYear(year);
-        endOfYear.setMonth(11);
-        endOfYear.setDate(31);
-        endOfYear.setHours(23, 59, 59);
-
-        return TransactionItems.findAll({
+    async listAllDetails(req, res) {
+        const transactionItems = await TransactionItems.findAll({
             include: [
                 Products,
                 {
                     model: Transactions,
                     attributes: ['id', 'UserId']
                 }],
-            where: {
-                'updatedAt': {
-                    [Op.between]: [beginningOfYear, endOfYear],
-                }
-            }
-        }).then(function (transactionItems) {
-            res.send(transactionItems)
-        })
+        });
+        res.send(transactionItems)
     },
     async removeTransaction(req, res) {
         const transactionId = parseInt(req.params['transactionId'])
@@ -183,7 +163,7 @@ const TransactionController = {
                 promise = Promise.resolve()
             }
             await promise;
-            transaction = Transactions.create(newTransaction);
+            transaction = await Transactions.create(newTransaction);
             await Promise.all(items.map(function (item) {
                 item.TransactionId = transaction.id
                 return TransactionItems.create(
