@@ -166,14 +166,21 @@ const TransactionController = {
             transaction = await Transactions.create(newTransaction);
             await Promise.all(items.map(function (item) {
                 item.TransactionId = transaction.id
+                item.tvq = TransactionController.calculateTVQ(item);
+                item.tps = TransactionController.calculateTPS(item);
                 return TransactionItems.create(
                     item
                 )
             }))
             return transaction
         })
-    }
-    ,
+    },
+    calculateTPS(product) {
+        return product.isTaxable ? product.amountWithoutTax * 0.05 * product.quantity : 0;
+    },
+    calculateTVQ(product) {
+        return product.isTaxable ? product.amountWithoutTax * 0.09975 * product.quantity : 0;
+    },
     _sanitizeItems: async function (items) {
         const products = await Products.findAll({
             where: {
