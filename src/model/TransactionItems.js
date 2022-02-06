@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes) => {
         tvq: DataTypes.DOUBLE,
         tps: DataTypes.DOUBLE,
         totalPriceAfterRebate: DataTypes.DOUBLE,
-        rebates: DataTypes.JSON
+        rebates: DataTypes.JSON,
+        isAddedToWave: DataTypes.BOOLEAN
     }, {
         paranoid: true,
         indexes: [{

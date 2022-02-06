@@ -30,7 +30,7 @@ const TransactionController = {
                 Products,
                 {
                     model: Transactions,
-                    attributes: ['id', 'UserId']
+                    attributes: ['id', 'UserId', 'personName', 'paymentMethod']
                 }],
         });
         res.send(transactionItems)
@@ -74,7 +74,7 @@ const TransactionController = {
         );
         // console.log(latestTransaction.balance)
         let transaction = await TransactionController._transaction(
-            items, user, latestTransaction
+            items, "prepaid", req.body.personName, user, latestTransaction
         );
         res.send(transaction)
     },
@@ -102,7 +102,7 @@ const TransactionController = {
             return item
         })
         const transaction = await TransactionController._transaction(
-            items
+            items, req.body.paymentMethod, req.body.personName
         )
         res.send(transaction);
     },
@@ -128,19 +128,23 @@ const TransactionController = {
                 totalPrice: amount * -1,
                 totalPriceAfterRebate: amount * -1
             }],
+            req.body.paymentMethod,
+            req.body.personName,
             user,
             latestTransaction
         )
         res.send(transaction);
     },
-    _transaction(items, user, latestUserTransaction) {
+    _transaction(items, paymentMethod, personName, user, latestUserTransaction) {
         let transaction
         let totalPrice = items.reduce(function (sum, item) {
             return (sum) + (item.totalPriceAfterRebate)
         }, 0)
         return models.sequelize.transaction(async function (t) {
             const newTransaction = {
-                totalPrice: parseFloat(totalPrice).toFixed(2)
+                totalPrice: parseFloat(totalPrice).toFixed(2),
+                paymentMethod: paymentMethod,
+                personName: personName
             }
             if (latestUserTransaction) {
                 newTransaction.balance = parseFloat(
