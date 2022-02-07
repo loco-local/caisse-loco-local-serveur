@@ -7,13 +7,15 @@ const {
     Users,
     Products,
     Categories,
-    Transactions
+    Transactions,
+    TransactionItems
 } = require('../model')
 
 const users = require('./Users.json')
 const products = require('./Products.json')
 const categories = require('./Categories.json')
 const transactions = require('./Transactions.json')
+const transactionItems = require('./TransactionItems.json')
 
 module.exports = {
     run: function () {
@@ -44,6 +46,13 @@ module.exports = {
                 return Promise.all(
                     transactions.map(transaction => {
                         return Transactions.create(transaction)
+                    })
+                )
+            })
+            .then(() => {
+                return Promise.all(
+                    transactionItems.map(transaction => {
+                        return TransactionItems.create(transaction)
                     })
                 )
             })

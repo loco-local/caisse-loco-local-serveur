@@ -27,7 +27,6 @@ const TransactionController = {
     async listAllDetails(req, res) {
         const transactionItems = await TransactionItems.findAll({
             include: [
-                Products,
                 {
                     model: Transactions,
                     attributes: ['id', 'UserId', 'personName', 'paymentMethod']
@@ -85,7 +84,6 @@ const TransactionController = {
                 TransactionId: transactionId
             },
             include: [{
-                model: Products,
                 attributes: ['name', 'format']
             }]
         }).then(function (transactionItems) {
@@ -169,9 +167,10 @@ const TransactionController = {
             await promise;
             transaction = await Transactions.create(newTransaction);
             await Promise.all(items.map(function (item) {
-                item.TransactionId = transaction.id
+                item.TransactionId = transaction.id;
                 item.tvq = TransactionController.calculateTVQ(item);
                 item.tps = TransactionController.calculateTPS(item);
+                item.description = item.name;
                 return TransactionItems.create(
                     item
                 )

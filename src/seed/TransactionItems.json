@@ -1,38 +1,27 @@
 [
   {
-    "ProductId": 1,
+    "description": "Paiement compte prépayé",
     "TransactionId": 1,
     "quantity": 1,
-    "unitPrice": -350,
+    "price": -350,
     "totalPrice": -350,
     "totalPriceAfterRebate": -350
   },
   {
-    "ProductId": 2,
+    "ProductId" : 1,
+    "description": "Vaisselle",
     "TransactionId": 2,
     "quantity": 5,
-    "unitPrice": 2.5,
-    "totalPrice": 12.5,
-    "totalPriceAfterRebate": 11.25,
-    "rebates": [
-      {
-        "name": "subscriber",
-        "amount": 1.25
-      }
-    ]
+    "price": 2.5,
+    "totalPrice": 12.5
   },
   {
     "ProductId": 3,
+    "description": "Lessive",
     "TransactionId": 2,
     "quantity": 2,
-    "unitPrice": 3,
+    "price": 3,
     "totalPrice": 6,
-    "totalPriceAfterRebate": 5.4,
-    "rebates": [
-      {
-        "name": "subscriber",
-        "amount": 0.6
-      }
-    ]
+    "totalPriceAfterRebate": 5.4
   }
 ]

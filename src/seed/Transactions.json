@@ -2,11 +2,13 @@
   {
     "UserId": 1,
     "totalPrice": -350,
-    "balance": 333.35
+    "balance": 333.35,
+    "paymentMethod" : "cash"
   },
   {
     "UserId": 3,
     "totalPrice": -34.00,
-    "balance": 34.00
+    "balance": 34.00,
+    "paymentMethod" : "interact"
   }
 ]
