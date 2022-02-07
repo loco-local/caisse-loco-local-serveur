@@ -120,9 +120,9 @@ const TransactionController = {
         );
         let transaction = await TransactionController._transaction(
             [{
-                ProductId: BASKET_PRODUCT_ID,
+                name: "Paiement compte prépayé",
                 quantity: 1,
-                unitPrice: amount * -1,
+                price: amount * -1,
                 totalPrice: amount * -1,
                 totalPriceAfterRebate: amount * -1
             }],
