@@ -63,7 +63,7 @@ const TransactionController = {
         });
         // console.log("yo " + JSON.stringify(req.body[0]))
         let items = await TransactionController._sanitizeItems(
-            req.body
+            req.body.items
         )
         items = items.map(function (item) {
             item.totalPriceAfterRebate = parseFloat(item.totalPrice)
@@ -95,7 +95,7 @@ const TransactionController = {
     ,
     async anonymousTransaction(req, res) {
         let items = await TransactionController._sanitizeItems(
-            req.body
+            req.body.items
         );
         items = items.map(function (item) {
             item.totalPriceAfterRebate = parseFloat(item.totalPrice)

@@ -53,7 +53,10 @@ TestUtil.listTransactionsForUserId = function (userId, sortType) {
 TestUtil.addTransaction = async function (user, items) {
     let res = await chai.request(app)
         .post('/api/' + user.id + '/transaction')
-        .send(items);
+        .send({
+            items: items,
+            paymentMethod: 'cash'
+        });
     return res.body.transactionId;
 };
 
