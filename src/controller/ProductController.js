@@ -53,6 +53,7 @@ module.exports = {
             isAvailable: product.isAvailable,
             hasDecimalQuantity: product.hasDecimalQuantity,
             isActivity: product.isActivity,
+            isOther: product.isOther,
             CategoryId: product.CategoryId
         })
         res.send({
@@ -77,6 +78,7 @@ module.exports = {
             isAvailable: product.isAvailable,
             hasDecimalQuantity: product.hasDecimalQuantity,
             isActivity: product.isActivity,
+            isOther: product.isOther,
             CategoryId: product.CategoryId
         }, {
             where: {

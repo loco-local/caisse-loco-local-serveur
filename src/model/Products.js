@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         image: DataTypes.JSONB,
         nbInStock: DataTypes.DOUBLE,
         isActivity: DataTypes.BOOLEAN,
+        isOther: DataTypes.BOOLEAN,
         isAvailable: DataTypes.BOOLEAN,
         hasDecimalQuantity: DataTypes.BOOLEAN
     })
