@@ -25,12 +25,19 @@ const TransactionController = {
         res.send(transactions)
     },
     async listAllDetails(req, res) {
+        const lowerDate = new Date(req.body.lowerDate);
+        const higherDate = new Date(req.body.higherDate);
         const transactionItems = await TransactionItems.findAll({
             include: [
                 {
                     model: Transactions,
                     attributes: ['id', 'UserId', 'personName', 'paymentMethod']
                 }],
+            where: {
+                'createdAt': {
+                    [Op.between]: [lowerDate, higherDate],
+                }
+            }
         });
         res.send(transactionItems)
     },

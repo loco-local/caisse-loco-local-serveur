@@ -80,7 +80,7 @@ router.post(
     TransactionController.anonymousTransaction
 )
 
-router.get(
+router.post(
     '/transactions/details',
     TransactionController.listAllDetails
 )
