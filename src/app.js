@@ -42,7 +42,7 @@ app.use(function (req, res, next) {
 })
 
 const port = config.getConfig().port || 4107
-sequelize.sync({force: true})
+sequelize.sync()
   .then(() => {
     server.listen(port, function () {
       console.log('caisse.loco-local.net app listening on environment', app.get('env'))
