@@ -1,7 +1,7 @@
 const WAVE_URL = 'https://gql.waveapps.com/graphql/public';
 const config = require('../config')
 const fetch = require('node-fetch');
-
+const waveBusinessId = config.getConfig().waveHgBusinessId;
 const WaveAccountingController = {
     listCategories: async function (req, res) {
         const response = await fetch(WAVE_URL, {
@@ -12,13 +12,17 @@ const WaveAccountingController = {
             },
             body: JSON.stringify({
                 query: `query {
-                           business(id:"QnVzaW5lc3M6MTc2YTBkNzktOTNkOS00MjBkLTk3ZTEtYzAyMTc3ZTRmOTRm"){
-                           accounts(pageSize:200){
+                           business(id:"${waveBusinessId}"){
+                           accounts(pageSize:300){
                            edges{
                                 node{
                                     id
-                                    name
-                                }
+                                    name,
+                                    type {
+                                        name
+                                        value
+                                    }
+                                }                              
                           }
                         }  
                     }
@@ -27,7 +31,11 @@ const WaveAccountingController = {
             })
         });
         const categories = await response.json();
-        res.send(categories.data.business.accounts.edges);
+        res.send(
+            categories.data.business.accounts.edges.filter((edge) => {
+                return edge.node.type.value !== "EXPENSE"
+            })
+        );
     }
 }
 
