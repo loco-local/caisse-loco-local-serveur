@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
         isActivity: DataTypes.BOOLEAN,
         isOther: DataTypes.BOOLEAN,
         isAvailable: DataTypes.BOOLEAN,
-        hasDecimalQuantity: DataTypes.BOOLEAN
+        hasDecimalQuantity: DataTypes.BOOLEAN,
+        accountingCategoryId: DataTypes.INTEGER
     })
 
     Products.defineAssociationsUsingModels = function (model, models) {

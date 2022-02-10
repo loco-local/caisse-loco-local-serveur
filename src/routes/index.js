@@ -6,6 +6,7 @@ const UserController = require('../controller/UserController')
 const TransactionController = require('../controller/TransactionController')
 const ProductController = require('../controller/ProductController')
 const CategoryController = require('../controller/CategoryController')
+const WaveAccountingController = require('../controller/WaveAccountingController')
 const isAuthenticated = require('../policy/isAuthenticated')
 const isAdmin = require('../policy/isAdmin')
 
@@ -114,6 +115,11 @@ router.put(
 router.put(
     '/category/name/:categoryId',
     CategoryController.updateName
+)
+
+router.get(
+    '/wave-accounting/categories',
+    WaveAccountingController.listCategories
 )
 
 
