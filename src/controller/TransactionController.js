@@ -12,7 +12,11 @@ const {
     Products
 } = models
 
+const config = require('../config')
+
 const {Op} = require('sequelize')
+
+const WaveAccountingController = require('./WaveAccountingController')
 
 const TransactionController = {
     async listForUser(req, res) {
@@ -131,7 +135,8 @@ const TransactionController = {
                 quantity: 1,
                 price: amount * -1,
                 totalPrice: amount * -1,
-                totalPriceAfterRebate: amount * -1
+                totalPriceAfterRebate: amount * -1,
+                accountingCategoryId: config.getConfig().wavePrepaidAccountId
             }],
             req.body.paymentMethod,
             req.body.personName,
@@ -173,14 +178,22 @@ const TransactionController = {
             }
             await promise;
             transaction = await Transactions.create(newTransaction);
-            await Promise.all(items.map(function (item) {
+            await Promise.all(items.map(async function (item) {
                 item.TransactionId = transaction.id;
                 item.tvq = TransactionController.calculateTVQ(item);
                 item.tps = TransactionController.calculateTPS(item);
                 item.description = item.name;
                 return TransactionItems.create(
                     item
-                )
+                ).then((transactionItem) => {
+                    return WaveAccountingController.addTransaction(
+                        transactionItem,
+                        item.accountingCategoryId,
+                        paymentMethod,
+                        transaction.personName,
+                        new Date()
+                    );
+                })
             }))
             return transaction
         })
@@ -205,14 +218,17 @@ const TransactionController = {
             const product = products.filter(function (product) {
                 return product.id === item.id
             })[0];
-            if (!product.isActivity) {
+            if (!product.isActivity && !product.isOther) {
                 item.price = product.price
             }
             if (item.quantity < 0) {
                 item.quantity = 0
             }
-            item.totalPrice = item.price * item.quantity
-            item.ProductId = item.id
+            item.totalPrice = item.price * item.quantity;
+            item.ProductId = item.id;
+            if (!item.accountingCategoryId) {
+                item.accountingCategoryId = product.accountingCategoryId;
+            }
             item.id = null
             return item
         });
