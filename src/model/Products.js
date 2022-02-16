@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         isOther: DataTypes.BOOLEAN,
         isAvailable: DataTypes.BOOLEAN,
         hasDecimalQuantity: DataTypes.BOOLEAN,
-        accountingCategoryId: DataTypes.INTEGER
+        accountingCategoryId: DataTypes.STRING
     })
 
     Products.defineAssociationsUsingModels = function (model, models) {
