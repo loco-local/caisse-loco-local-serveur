@@ -25,18 +25,24 @@ const UserController = {
     },
     async createUser(req, res) {
         let info = req.body;
-        info.email = info.email.toLowerCase();
-        delete info.password;
-        let user = await Users.findOne({
-            where: {
-                email: info.email
+        let user;
+        if (info.email !== null && info.email !== undefined) {
+            info.email = info.email.toLowerCase();
+            user = await Users.findOne({
+                where: {
+                    email: info.email
+                }
+            });
+            if (user) {
+                return res.status(403).send({
+                    error: 'Register information is incorrect'
+                })
             }
-        });
-        if (user) {
-            return res.status(403).send({
-                error: 'Register information is incorrect'
-            })
         }
+        if (info.email === "") {
+            info.email = null;
+        }
+        delete info.password;
         user = await Users.create(
             info
         );

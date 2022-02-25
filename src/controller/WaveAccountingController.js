@@ -82,8 +82,13 @@ const WaveAccountingController = {
             })
         });
         let json = await response.json();
+        const isAddedToWave = json.data && json.data.moneyTransactionCreate && json.data.moneyTransactionCreate.didSucceed;
+        if (!isAddedToWave) {
+            console.log("failed to add to wave")
+            console.log(json);
+        }
         await TransactionItems.update({
-            isAddedToWave: json.data && json.data.moneyTransactionCreate && json.data.moneyTransactionCreate.didSucceed,
+            isAddedToWave: isAddedToWave,
         }, {
             where: {
                 id: transactionItem.id
