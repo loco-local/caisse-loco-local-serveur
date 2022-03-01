@@ -48,6 +48,24 @@ const WaveAccountingController = {
         if (paymentMethod === 'interact') {
             return;
         }
+        const variables = {
+            input: {
+                businessId: config.getConfig().waveHgBusinessId,
+                externalId: transactionItem.id + "",
+                date: fns.format(date, "yyyy-MM-dd"),
+                description: WaveAccountingController._descriptionOfTransactionItem(transactionItem, personName),
+                anchor: {
+                    accountId: WaveAccountingController.accountIdFromPaymentMethod(paymentMethod),
+                    amount: transactionItem.totalPrice,
+                    direction: "DEPOSIT"
+                },
+                lineItems: [{
+                    accountId: waveCategoryAccountId,
+                    amount: transactionItem.totalPrice,
+                    balance: "INCREASE"
+                }]
+            }
+        }
         const response = await fetch(WAVE_URL, {
             method: 'POST',
             headers: {
@@ -61,32 +79,18 @@ const WaveAccountingController = {
                                 didSucceed
                             }
                         }`,
-                variables: {
-                    input: {
-                        businessId: config.getConfig().waveHgBusinessId,
-                        externalId: transactionItem.id + "",
-                        date: fns.format(date, "yyyy-MM-dd"),
-                        description: WaveAccountingController._descriptionOfTransactionItem(transactionItem, personName),
-                        anchor: {
-                            accountId: WaveAccountingController.accountIdFromPaymentMethod(paymentMethod),
-                            amount: transactionItem.totalPrice,
-                            direction: "DEPOSIT"
-                        },
-                        lineItems: [{
-                            accountId: waveCategoryAccountId,
-                            amount: transactionItem.totalPrice,
-                            balance: "INCREASE"
-                        }]
-                    }
-                }
+                variables: variables
             })
         });
         let json = await response.json();
         const isAddedToWave = json.data && json.data.moneyTransactionCreate && json.data.moneyTransactionCreate.didSucceed;
         if (!isAddedToWave) {
             console.log("failed to add to wave")
-            console.log(response);
+            // console.log(response);
+            console.log(response.errors);
             console.log(json);
+            console.log(json.errors);
+            console.log(variables);
         }
         await TransactionItems.update({
             isAddedToWave: isAddedToWave,
