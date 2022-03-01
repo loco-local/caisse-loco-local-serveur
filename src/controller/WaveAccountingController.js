@@ -3,6 +3,7 @@ const config = require('../config')
 const fetch = require('node-fetch');
 const waveBusinessId = config.getConfig().waveHgBusinessId;
 const fns = require('date-fns')
+const { v4: uuidv4 } = require('uuid');
 
 const models = require('../model')
 const {
@@ -56,7 +57,7 @@ const WaveAccountingController = {
         const variables = {
             input: {
                 businessId: config.getConfig().waveHgBusinessId,
-                externalId: transactionItem.id + "",
+                externalId: transactionItem.id + "-" + uuidv4(),
                 date: fns.format(date, "yyyy-MM-dd"),
                 description: WaveAccountingController._descriptionOfTransactionItem(transactionItem, personName),
                 anchor: {
@@ -94,7 +95,7 @@ const WaveAccountingController = {
             console.log("failed to add to wave")
             // console.log(response);
             console.log(response.errors);
-            console.log(config.getConfig().waveAccounting)
+            // console.log(config.getConfig().waveAccounting)
             console.log(json);
             console.log(json.errors);
             // console.log(json.data.moneyTransactionCreate.inputErrors);
