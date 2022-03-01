@@ -77,7 +77,12 @@ const WaveAccountingController = {
                 query: `mutation ($input:MoneyTransactionCreateInput!){
                             moneyTransactionCreate(input:$input)
                             {
-                                didSucceed
+                                didSucceed,
+                                inputErrors{
+                                    path,
+                                    message,
+                                    code
+                                }
                             }
                         }`,
                 variables: variables
