@@ -48,6 +48,11 @@ const WaveAccountingController = {
         if (paymentMethod === 'interact') {
             return;
         }
+        const lineItems = [{
+            accountId: waveCategoryAccountId,
+            amount: transactionItem.totalPrice.toFixed(2),
+            balance: "INCREASE"
+        }]
         const variables = {
             input: {
                 businessId: config.getConfig().waveHgBusinessId,
@@ -56,14 +61,10 @@ const WaveAccountingController = {
                 description: WaveAccountingController._descriptionOfTransactionItem(transactionItem, personName),
                 anchor: {
                     accountId: WaveAccountingController.accountIdFromPaymentMethod(paymentMethod),
-                    amount: transactionItem.totalPrice,
+                    amount: transactionItem.totalPrice.toFixed(2),
                     direction: "DEPOSIT"
                 },
-                lineItems: [{
-                    accountId: waveCategoryAccountId,
-                    amount: transactionItem.totalPrice,
-                    balance: "INCREASE"
-                }]
+                lineItems: lineItems
             }
         }
         const response = await fetch(WAVE_URL, {
@@ -88,9 +89,11 @@ const WaveAccountingController = {
             console.log("failed to add to wave")
             // console.log(response);
             console.log(response.errors);
+            console.log(config.getConfig().waveAccounting)
             console.log(json);
             console.log(json.errors);
             console.log(variables);
+            console.log(lineItems[0])
         }
         await TransactionItems.update({
             isAddedToWave: isAddedToWave,
