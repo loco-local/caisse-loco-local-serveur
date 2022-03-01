@@ -85,6 +85,7 @@ const WaveAccountingController = {
         const isAddedToWave = json.data && json.data.moneyTransactionCreate && json.data.moneyTransactionCreate.didSucceed;
         if (!isAddedToWave) {
             console.log("failed to add to wave")
+            console.log(response);
             console.log(json);
         }
         await TransactionItems.update({
