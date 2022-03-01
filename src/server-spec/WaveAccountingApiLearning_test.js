@@ -1,7 +1,7 @@
 const config = require('../config')
 const WAVE_URL = 'https://gql.waveapps.com/graphql/public';
 const fetch = require('node-fetch');
-describe('WaveAccountingApi', () => {
+xdescribe('WaveAccountingApi', () => {
     xit("create transaction", async () => {
         const response = await fetch(WAVE_URL, {
             method: 'POST',

@@ -97,6 +97,8 @@ const WaveAccountingController = {
             console.log(config.getConfig().waveAccounting)
             console.log(json);
             console.log(json.errors);
+            // console.log(json.data.moneyTransactionCreate.inputErrors);
+            console.log(JSON.stringify(json.data));
             console.log(variables);
             console.log(lineItems[0])
         }
