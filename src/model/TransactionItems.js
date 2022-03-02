@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
         tps: DataTypes.DOUBLE,
         totalPriceAfterRebate: DataTypes.DOUBLE,
         rebates: DataTypes.JSON,
-        isAddedToWave: DataTypes.BOOLEAN
+        isAddedToWave: DataTypes.BOOLEAN,
+        uuid: DataTypes.STRING
     }, {
         paranoid: true,
         indexes: [{

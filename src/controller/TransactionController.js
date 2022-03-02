@@ -1,10 +1,11 @@
-const BASKET_PRODUCT_ID = 1
-const PENALTY_PRODUCT_ID = 2
+const BASKET_PRODUCT_ID = 1;
+const PENALTY_PRODUCT_ID = 2;
 const adminOnlyProducts = [
     BASKET_PRODUCT_ID,
     PENALTY_PRODUCT_ID
-]
-const models = require('../model')
+];
+const {v4: uuidv4} = require('uuid');
+const models = require('../model');
 const {
     Transactions,
     TransactionItems,
@@ -183,6 +184,7 @@ const TransactionController = {
                 item.tvq = TransactionController.calculateTVQ(item);
                 item.tps = TransactionController.calculateTPS(item);
                 item.description = item.name;
+                item.uuid = uuidv4();
                 return TransactionItems.create(
                     item
                 ).then((transactionItem) => {
