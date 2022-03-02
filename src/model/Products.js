@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         nbInStock: DataTypes.DOUBLE,
         isActivity: DataTypes.BOOLEAN,
         isOther: DataTypes.BOOLEAN,
+        isDonation: DataTypes.BOOLEAN,
         isAvailable: DataTypes.BOOLEAN,
         hasDecimalQuantity: DataTypes.BOOLEAN,
         accountingCategoryId: DataTypes.STRING

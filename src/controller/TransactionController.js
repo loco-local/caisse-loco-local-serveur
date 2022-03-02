@@ -220,7 +220,7 @@ const TransactionController = {
             const product = products.filter(function (product) {
                 return product.id === item.id
             })[0];
-            if (!product.isActivity && !product.isOther) {
+            if (!product.isActivity && !product.isOther && !product.isDonation) {
                 item.price = product.price
             }
             if (item.quantity < 0) {

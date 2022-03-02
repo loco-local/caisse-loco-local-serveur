@@ -54,6 +54,7 @@ module.exports = {
             hasDecimalQuantity: product.hasDecimalQuantity,
             isActivity: product.isActivity,
             isOther: product.isOther,
+            isDonation: product.isDonation,
             CategoryId: product.CategoryId,
             accountingCategoryId: product.accountingCategoryId
         })
@@ -80,6 +81,7 @@ module.exports = {
             hasDecimalQuantity: product.hasDecimalQuantity,
             isActivity: product.isActivity,
             isOther: product.isOther,
+            isDonation: product.isDonation,
             CategoryId: product.CategoryId,
             accountingCategoryId: product.accountingCategoryId
         }, {
