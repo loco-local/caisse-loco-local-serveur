@@ -39,7 +39,7 @@ const TransactionController = {
                     attributes: ['id', 'UserId', 'personName', 'paymentMethod']
                 }],
             where: {
-                'createdAt': {
+                'updatedAt': {
                     [Op.between]: [lowerDate, higherDate],
                 }
             }
