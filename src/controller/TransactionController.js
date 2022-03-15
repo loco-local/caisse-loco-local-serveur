@@ -39,7 +39,7 @@ const TransactionController = {
                     attributes: ['id', 'UserId', 'personName', 'paymentMethod']
                 }],
             where: {
-                'updatedAt': {
+                'createdAt': {
                     [Op.between]: [lowerDate, higherDate],
                 }
             }
@@ -231,7 +231,9 @@ const TransactionController = {
             if (!item.accountingCategoryId) {
                 item.accountingCategoryId = product.accountingCategoryId;
             }
-            item.id = null
+            item.id = null;
+            item.createdAt = null;
+            item.updatedAt = null;
             return item
         });
     },
