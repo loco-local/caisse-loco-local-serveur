@@ -45,7 +45,11 @@ const WaveAccountingController = {
         );
     },
     async addTransaction(transactionItem, waveCategoryAccountId, paymentMethod, personName, date) {
-        if (paymentMethod === 'interact') {
+        if (paymentMethod === 'interact' || paymentMethod === 'bankTransfer') {
+            return;
+        }
+        if (config.getConfig().waveAccounting === "test") {
+            console.log("Test mode not trying to add to wave")
             return;
         }
         const lineItems = [{
