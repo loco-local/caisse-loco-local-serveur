@@ -11,6 +11,10 @@ const {
 
 const WaveAccountingController = {
     listCategories: async function (req, res) {
+        if (config.getConfig().waveAccounting === "test") {
+            res.send([])
+            return;
+        }
         const response = await fetch(WAVE_URL, {
             method: 'POST',
             headers: {

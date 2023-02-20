@@ -12,7 +12,12 @@ module.exports = (sequelize, DataTypes) => {
         isDonation: DataTypes.BOOLEAN,
         isAvailable: DataTypes.BOOLEAN,
         hasDecimalQuantity: DataTypes.BOOLEAN,
-        accountingCategoryId: DataTypes.STRING
+        accountingCategoryId: DataTypes.STRING,
+        requiresBuyerName: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+            allowNull: false
+        }
     })
 
     Products.defineAssociationsUsingModels = function (model, models) {

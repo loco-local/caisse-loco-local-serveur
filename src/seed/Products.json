@@ -1,5 +1,18 @@
 [
   {
+    "name": "Renouvellement adhésion",
+    "description": "",
+    "price": 15,
+    "isActivity": false,
+    "isDonation": false,
+    "isOther": false,
+    "hasDecimalQuantity": false,
+    "isPriceInKg": false,
+    "CategoryId": 2,
+    "isTaxable": true,
+    "requiresBuyerName": true
+  },
+  {
     "name": "Vaisselle",
     "description": "",
     "price": 5.25,

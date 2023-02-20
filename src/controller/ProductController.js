@@ -56,7 +56,8 @@ module.exports = {
             isOther: product.isOther,
             isDonation: product.isDonation,
             CategoryId: product.CategoryId,
-            accountingCategoryId: product.accountingCategoryId
+            accountingCategoryId: product.accountingCategoryId,
+            requiresBuyerName: product.requiresBuyerName
         })
         res.send({
             id: product.id
@@ -83,7 +84,8 @@ module.exports = {
             isOther: product.isOther,
             isDonation: product.isDonation,
             CategoryId: product.CategoryId,
-            accountingCategoryId: product.accountingCategoryId
+            accountingCategoryId: product.accountingCategoryId,
+            requiresBuyerName: product.requiresBuyerName
         }, {
             where: {
                 id: product.id
