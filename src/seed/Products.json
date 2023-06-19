@@ -22,7 +22,8 @@
     "hasDecimalQuantity": true,
     "isPriceInKg": true,
     "CategoryId": 2,
-    "isTaxable": true
+    "isTaxable": true,
+    "accountingCategoryId": "QWNjb3VudDoxMzU1MjczNjg3NTUyNTc4NDI0O0J1c2luZXNzOjE3NmEwZDc5LTkzZDktNDIwZC05N2UxLWMwMjE3N2U0Zjk0Zg=="
   },
   {
     "name": "Activité",
@@ -79,7 +80,8 @@
     "hasDecimalQuantity": true,
     "isPriceInKg": false,
     "CategoryId": 4,
-    "isTaxable": false
+    "isTaxable": false,
+    "accountingCategoryId": "QWNjb3VudDoxMTU3MzYyMTY3ODMwMzY4NTQyO0J1c2luZXNzOjE3NmEwZDc5LTkzZDktNDIwZC05N2UxLWMwMjE3N2U0Zjk0Zg=="
   },
   {
     "name": "Tout usage",

@@ -120,7 +120,11 @@ const WaveAccountingController = {
     },
     _descriptionOfTransactionItem: function (transactionItem, personName) {
         personName = personName === null ? "" : " " + personName;
-        return transactionItem.description + personName;
+        let nameInfo = "";
+        if (transactionItem.info !== null && transactionItem.info !== undefined && transactionItem.info.name !== undefined) {
+            nameInfo = " " + transactionItem.info.name
+        }
+        return transactionItem.description + nameInfo + personName;
     },
     accountIdFromPaymentMethod: function (paymentMethod) {
         switch (paymentMethod) {
