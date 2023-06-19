@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const TransactionItems = sequelize.define('TransactionItems', {
         description: DataTypes.STRING,
-        quantity: DataTypes.INTEGER,
+        quantity: DataTypes.DOUBLE,
         price: DataTypes.DOUBLE,
         totalPrice: DataTypes.DOUBLE,
         info: DataTypes.JSON,

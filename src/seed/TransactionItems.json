@@ -19,9 +19,8 @@
     "ProductId": 3,
     "description": "Lessive",
     "TransactionId": 2,
-    "quantity": 2,
+    "quantity": 1.45,
     "price": 3,
-    "totalPrice": 6,
-    "totalPriceAfterRebate": 5.4
+    "totalPrice": 4.35
   }
 ]
