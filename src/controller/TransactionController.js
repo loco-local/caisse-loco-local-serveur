@@ -36,7 +36,7 @@ const TransactionController = {
             include: [
                 {
                     model: Transactions,
-                    attributes: ['id', 'UserId', 'personName', 'paymentMethod']
+                    attributes: ['id', 'UserId', 'totalPrice', 'personName', 'paymentMethod']
                 }],
             where: {
                 'createdAt': {
